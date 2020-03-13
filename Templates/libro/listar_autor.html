@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% block title%}Listado de Autores{% endblock title%}
+
+{% block body%}
+<form method="POST">
+    {% csrf_token %} <!Agregarle seguridad al proyecto>
+    {{ Autor_form.as_p }}
+    {% if autores %}
+
+        <table>
+            <thead>
+            <tr>
+
+                <th>#</th>
+                <th>Nombres</th>
+                <th>Apellido</th>
+                <th>Nacionalidad</th>
+                <th>Descripcion</th>
+
+            </tr>
+            </thead>
+            <tbody>
+                {%for autor in autores%}
+                    <tr>
+                        <td>{{autor.id}}</td>
+                        <td>{{autor.nombre}}</td>
+                        <td>{{autor.apellido}}</td>
+                        <td>{{autor.nacionalidad}}</td>
+                        <td>{{autor.descripcion}}</td>
+                        <td>
+                            <a href='{% url 'libro:editar_autor' autor.id %}'> Editar </a>
+                            <a href='{% url 'libro:eliminar_autor' autor.id %}'> Eliminar </a>
+                        </td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+
+    {%else%}
+
+        <h1> No existen autores registrados</h1>
+
+    {%endif%}
+
+    <button type = "submit">Crear</button>
+</form>
+
+{% endblock body%}
+
