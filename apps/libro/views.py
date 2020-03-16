@@ -4,6 +4,8 @@ from .forms import AutorForm
 from .models import Autor
 
 # Create your views here.
+
+##Vistas basadas en funciones##/////////////////////////////////////////////////////////////////////////////////////////
 def Home(request):
     return render(request,'index.html')
 
@@ -44,10 +46,25 @@ def editarAutor(request,id):
     return render(request,'libro/crear_autor.html',{'Autor_form':autor_form, 'error':error})
 
 # Eliminacion Directa : Borrado de la base de datos
+
+#def eliminarAutor(request,id):
+#    autor = Autor.objects.get(id = id)
+#    if request.method == 'POST':
+#        autor.delete()
+#        return redirect('libro:listarAutor')
+#    return render(request,'libro/eliminar_autor.html',{'autor':autor})
+
 # Elimincaicon Logica: Ocultar el registro de la base de datos al cliente
 def eliminarAutor(request,id):
     autor = Autor.objects.get(id = id)
     if request.method == 'POST':
-        autor.delete()
+        autor.estado = False
+        autor.save()
         return redirect('libro:listarAutor')
     return render(request,'libro/eliminar_autor.html',{'autor':autor})
+##Vistas basadas en funciones/End##/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
